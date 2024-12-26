@@ -49,7 +49,7 @@ struct CalendarView: View {
 extension CalendarView {
     private var topView: some View {
         VStack {
-            Text("\(currentYear)")
+            Text("\(yearName(currentYear))")
                 .font(.title)
             
             HStack {
@@ -164,6 +164,14 @@ private extension CalendarView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         let dateComponents = DateComponents(year: currentYear, month: month)
+        guard let date = calendar.date(from: dateComponents) else { return "" }
+        return dateFormatter.string(from: date)
+    }
+    
+    private func yearName(_ year: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY"
+        let dateComponents = DateComponents(year: year)
         guard let date = calendar.date(from: dateComponents) else { return "" }
         return dateFormatter.string(from: date)
     }
